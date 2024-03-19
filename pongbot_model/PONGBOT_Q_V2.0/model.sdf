@@ -1,0 +1,1051 @@
+<?xml version="1.0" ?>
+<sdf version='1.7'>
+  <model name='PONGBOT_Q_V2.0'>
+
+    <!--joint name="fixed to ground" type="fixed">
+      <parent>world</parent>
+      <child>BODY</child>
+    </joint-->
+
+    <link name='BODY'>
+      <inertial>
+        <pose>-0.009766 -0.000477 0.00088 0 -0 0</pose>
+        <mass>23.328</mass>
+        <inertia>
+          <ixx>0.19262</ixx>
+          <ixy>-0.002404</ixy>
+          <ixz>-0.000122</ixz>
+          <iyy>1.0817</iyy>
+          <iyz>-0.000142</iyz>
+          <izz>1.1999</izz>
+        </inertia>
+      </inertial>
+      <!--collision name='BODY_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/BODY.STL</uri>
+          </mesh>
+        </geometry>
+      </collision-->
+      <visual name='BODY_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/BODY.STL</uri>
+          </mesh>
+        </geometry>
+          <material>
+          <ambient>0 0 0 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <emissive>0 0 0 0</emissive>
+          <specular>0 0 0 0</specular>
+        </material>
+      </visual>
+      <sensor name='IMU' type='imu'>
+        <pose relative_to='BODY'>0 0 0 0 -0 0</pose>
+        <imu>
+          <angular_velocity>
+            <x>
+              <noise type='none'></noise>
+            </x>
+            <y>
+              <noise type='none'></noise>
+            </y>
+            <z>
+              <noise type='none'></noise>
+            </z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x>
+              <noise type='none'></noise>
+            </x>
+            <y>
+              <noise type='none'></noise>
+            </y>
+            <z>
+              <noise type='none'></noise>
+            </z>
+          </linear_acceleration>
+        </imu>
+        <always_on>1</always_on>
+        <update_rate>1000</update_rate>
+        <visualize>true</visualize>
+      </sensor>
+    </link>
+    <link name='FL_HIP'>
+      <pose relative_to='FL_HR_JOINT'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.002803 -0.005227 0.001089 0 -0 0</pose>
+        <mass>1.5871</mass>
+        <inertia>
+          <ixx>0.001339</ixx>
+          <ixy>0.000009</ixy>
+          <ixz>0.00001</ixz>
+          <iyy>0.001938</iyy>
+          <iyz>0.000015</iyz>
+          <izz>0.001585</izz>
+        </inertia>
+      </inertial>
+      <!--collision name='FL_HIP_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/FL_HIP.STL</uri>
+          </mesh>
+        </geometry>
+      </collision-->
+      <visual name='FL_HIP_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/FL_HIP.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>244 67 54 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <emissive>0 0 0 1</emissive>
+          <specular>0 0 0 0</specular>
+        </material>
+      </visual>
+    </link>
+    <joint name='FL_HR_JOINT' type='revolute'>
+      <pose relative_to='BODY'>0.31804 0.1138 0 0 -0 0</pose>
+      <parent>BODY</parent>
+      <child>FL_HIP</child>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='FL_THIGH'>
+      <pose relative_to='FL_HP_JOINT'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.000189 -0.010257 -0.038433 0 -0 0</pose>
+        <mass>3.32</mass>
+        <inertia>
+          <ixx>0.028079</ixx>
+          <ixy>-0.000023</ixy>
+          <ixz>0.000016</ixz>
+          <iyy>0.028442</iyy>
+          <iyz>-0.001256</iyz>
+          <izz>0.003743</izz>
+        </inertia>
+      </inertial>
+      <!--collision name='FL_THIGH_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/FL_THIGH.STL</uri>
+          </mesh>
+        </geometry>
+      </collision-->
+      <visual name='FL_THIGH_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/FL_THIGH.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>244 67 54 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <emissive>0 0 0 1</emissive>
+          <specular>0 0 0 0</specular>
+        </material>
+      </visual>
+    </link>
+    <joint name='FL_HP_JOINT' type='revolute'>
+      <pose relative_to='FL_HIP'>0 0.105 0 0 -0 0</pose>
+      <parent>FL_HIP</parent>
+      <child>FL_THIGH</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='FL_CALF'>
+      <pose relative_to='FL_KN_JOINT'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.000133 0.003337 -0.08188 0 -0 0</pose>
+        <mass>0.57335</mass>
+        <inertia>
+          <ixx>0.005458</ixx>
+          <ixy>0.000006</ixy>
+          <ixz>-0.000328</ixz>
+          <iyy>0.005379</iyy>
+          <iyz>0.000191</iyz>
+          <izz>0.000266</izz>
+        </inertia>
+      </inertial>
+      <!--collision name='FL_CALF_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/FL_CALF.STL</uri>
+          </mesh>
+        </geometry>
+      </collision-->
+      <visual name='FL_CALF_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/FL_CALF.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0 0 0 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <emissive>0 0 0 1</emissive>
+          <specular>0 0 0 0</specular>
+        </material>
+      </visual>
+    </link>
+    <joint name='FL_KN_JOINT' type='revolute'>
+      <pose relative_to='FL_THIGH'>0 0 -0.305 0 -0 0</pose>
+      <parent>FL_THIGH</parent>
+      <child>FL_CALF</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='FL_TIP'>
+      <pose relative_to='FL_KN_JOINT'>0 0 -0.28816 0 -0 0</pose>
+      <inertial>
+        <pose>0.000494 0 0.002943 0 -0 0</pose>
+        <mass>0.1646</mass>
+        <inertia>
+          <ixx>0.000088</ixx>
+          <ixy>0.000000</ixy>
+          <ixz>0.000000</ixz>
+          <iyy>0.000086</iyy>
+          <iyz>0.000000</iyz>
+          <izz>0.000073</izz>
+        </inertia>
+      </inertial>
+      <collision name='FL_TIP_collision'>
+        <pose>0 0 0 1.57 -0 0</pose>
+        <geometry>
+          <!--mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/FL_TIP.STL</uri>
+          </mesh-->
+          <cylinder>
+            <radius>0.031</radius>
+            <length>0.054</length>  
+          </cylinder>
+        </geometry>
+        <surface>
+          <bounce>
+            <restitution_coefficient> 0 </restitution_coefficient>
+          </bounce>
+          <friction>
+            <ode>
+              <mu>  100  </mu>
+              <mu2> 1  </mu2>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+      	        <kp>10000000</kp>
+                <kd>10000</kd>
+<!--               <max_vel>0.1</max_vel>
+              <min_depth>0.0001</min_depth> -->
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='FL_TIP_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/FL_TIP.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>153 153 153 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <emissive>0 0 0 1</emissive>
+          <specular>0 0 0 0</specular>
+        </material>
+      </visual>
+      <sensor name="FL_TIP_contact" type='contact'>
+       <contact>
+         <collision>FL_TIP_collision</collision>
+       </contact>
+      </sensor>
+    </link>
+    <joint name='FL_TIP_JOINT' type='fixed'>
+      <child>FL_TIP</child>
+      <parent>FL_CALF</parent>
+      <sensor name="FL_FT_SENSOR" type="force_torque">
+        <force_torque>
+          <frame>child</frame>
+          <measure_direction>child_to_parent</measure_direction>
+        </force_torque>
+        <!-- <visualize> True </visualize> -->
+      </sensor>
+    </joint>
+    <link name='FR_HIP'>
+      <pose relative_to='FR_HR_JOINT'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.002897 0.005227 -0.000725 0 -0 0</pose>
+        <mass>1.5871</mass>
+        <inertia>
+          <ixx>0.00134</ixx>
+          <ixy>-0.000014</ixy>
+          <ixz>-0.000011</ixz>
+          <iyy>0.001938</iyy>
+          <iyz>-0.000001</iyz>
+          <izz>0.001584</izz>
+        </inertia>
+      </inertial>
+      <!--collision name='FR_HIP_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/FR_HIP.STL</uri>
+          </mesh>
+        </geometry>
+      </collision-->
+      <visual name='FR_HIP_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/FR_HIP.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>244 67 54 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <emissive>0 0 0 1</emissive>
+          <specular>0 0 0 0</specular>
+        </material>
+      </visual>
+    </link>
+    <joint name='FR_HR_JOINT' type='revolute'>
+      <pose relative_to='BODY'>0.31804 -0.1138 0 0 -0 0</pose>
+      <parent>BODY</parent>
+      <child>FR_HIP</child>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='FR_THIGH'>
+      <pose relative_to='FR_HP_JOINT'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>-0.000189 0.010257 -0.038433 0 -0 0</pose>
+        <mass>3.32</mass>
+        <inertia>
+          <ixx>0.028079</ixx>
+          <ixy>-0.000023</ixy>
+          <ixz>-0.000016</ixz>
+          <iyy>0.028442</iyy>
+          <iyz>0.001256</iyz>
+          <izz>0.003743</izz>
+        </inertia>
+      </inertial>
+      <!--collision name='FR_THIGH_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/FR_THIGH.STL</uri>
+          </mesh>
+        </geometry>
+      </collision-->
+      <visual name='FR_THIGH_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/FR_THIGH.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>244 67 54 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <emissive>0 0 0 1</emissive>
+          <specular>0 0 0 0</specular>
+        </material>
+      </visual>
+    </link>
+    <joint name='FR_HP_JOINT' type='revolute'>
+      <pose relative_to='FR_HIP'>0 -0.105 0 0 -0 0</pose>
+      <parent>FR_HIP</parent>
+      <child>FR_THIGH</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='FR_CALF'>
+      <pose relative_to='FR_KN_JOINT'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.000137 -0.003337 -0.081883 0 -0 0</pose>
+        <mass>0.57335</mass>
+        <inertia>
+          <ixx>0.005457</ixx>
+          <ixy>-0.000006</ixy>
+          <ixz>-0.000328</ixz>
+          <iyy>0.005379</iyy>
+          <iyz>-0.000191</iyz>
+          <izz>0.000266</izz>
+        </inertia>
+      </inertial>
+      <!--collision name='FR_CALF_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/FR_CALF.STL</uri>
+          </mesh>
+        </geometry>
+      </collision-->
+      <visual name='FR_CALF_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/FR_CALF.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0 0 0 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <emissive>0 0 0 1</emissive>
+          <specular>0 0 0 0</specular>
+        </material>
+      </visual>
+    </link>
+    <joint name='FR_KN_JOINT' type='revolute'>
+      <pose relative_to='FR_THIGH'>0 0 -0.305 0 -0 0</pose>
+      <parent>FR_THIGH</parent>
+      <child>FR_CALF</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='FR_TIP'>
+      <pose relative_to='FR_KN_JOINT'>0 0 -0.28816 0 -0 0</pose>
+      <inertial>
+  <pose>0.000494 0 0.002943 0 -0 0</pose>
+        <mass>0.1646</mass>
+        <inertia>
+          <ixx>0.000088</ixx>
+          <ixy>0.000000</ixy>
+          <ixz>0.000000</ixz>
+          <iyy>0.000086</iyy>
+          <iyz>0.000000</iyz>
+          <izz>0.000073</izz>
+        </inertia>
+      </inertial>
+      <collision name='FR_TIP_collision'>
+        <pose>0 0 0 1.57 -0 0</pose>
+        <geometry>
+          <!--mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/FR_TIP.STL</uri>
+          </mesh-->
+          <cylinder>
+            <radius>0.031</radius>
+            <length>0.054</length>  
+          </cylinder>
+        </geometry>
+        <surface>
+          <bounce>
+            <restitution_coefficient> 0 </restitution_coefficient>
+          </bounce>
+          <friction>
+            <ode>
+              <mu>  100  </mu>
+              <mu2> 1  </mu2>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+      	      <kp>10000000</kp>
+              <kd>10000</kd>
+<!--               <max_vel>0.1</max_vel>
+              <min_depth>0.0001</min_depth> -->
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='FR_TIP_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/FR_TIP.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>153 153 153 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <emissive>0 0 0 1</emissive>
+          <specular>0 0 0 0</specular>
+        </material>
+      </visual>
+      <sensor name="FR_TIP_contact" type='contact'>
+       <contact>
+         <collision>FR_TIP_collision</collision>
+       </contact>
+      </sensor>
+    </link>
+    <joint name='FR_TIP_JOINT' type='fixed'>
+      <child>FR_TIP</child>
+      <parent>FR_CALF</parent>
+      <sensor name="FR_FT_SENSOR" type="force_torque">
+        <force_torque>
+          <frame>child</frame>
+          <measure_direction>child_to_parent</measure_direction>
+        </force_torque>
+        <!-- <visualize> True </visualize> -->
+      </sensor>
+    </joint>
+    <link name='RL_HIP'>
+      <pose relative_to='RL_HR_JOINT'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>-0.002897 -0.005227 -0.000725 0 -0 0</pose>
+        <mass>1.587072</mass>
+        <inertia>
+          <ixx>0.00134</ixx>
+          <ixy>-0.000014</ixy>
+          <ixz>0.000011</ixz>
+          <iyy>0.001938</iyy>
+          <iyz>0.000001</iyz>
+          <izz>0.001584</izz>
+        </inertia>
+      </inertial>
+      <!--collision name='RL_HIP_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/RL_HIP.STL</uri>
+          </mesh>
+        </geometry>
+      </collision-->
+      <visual name='RL_HIP_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/RL_HIP.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>244 67 54 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <emissive>0 0 0 1</emissive>
+          <specular>0 0 0 0</specular>
+        </material>
+      </visual>
+    </link>
+    <joint name='RL_HR_JOINT' type='revolute'>
+      <pose relative_to='BODY'>-0.31804 0.1138 0 0 -0 0</pose>
+      <parent>BODY</parent>
+      <child>RL_HIP</child>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='RL_THIGH'>
+      <pose relative_to='RL_HP_JOINT'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.000189 -0.010257 -0.038433 0 -0 0</pose>
+        <mass>3.32</mass>
+        <inertia>
+          <ixx>0.028079</ixx>
+          <ixy>-0.000023</ixy>
+          <ixz>0.000016</ixz>
+          <iyy>0.028442</iyy>
+          <iyz>-0.001256</iyz>
+          <izz>0.003743</izz>
+        </inertia>
+      </inertial>
+      <!--collision name='RL_THIGH_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/RL_THIGH.STL</uri>
+          </mesh>
+        </geometry>
+      </collision-->
+      <visual name='RL_THIGH_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/RL_THIGH.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>244 67 54 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <emissive>0 0 0 1</emissive>
+          <specular>0 0 0 0</specular>
+        </material>
+      </visual>
+    </link>
+    <joint name='RL_HP_JOINT' type='revolute'>
+      <pose relative_to='RL_HIP'>0 0.105 0 0 -0 0</pose>
+      <parent>RL_HIP</parent>
+      <child>RL_THIGH</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='RL_CALF'>
+      <pose relative_to='RL_KN_JOINT'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.000133 0.003337 -0.08188 0 -0 0</pose>
+        <mass>0.573349</mass>
+        <inertia>
+          <ixx>0.005458</ixx>
+          <ixy>0.000006</ixy>
+          <ixz>-0.000328</ixz>
+          <iyy>0.005379</iyy>
+          <iyz>0.000191</iyz>
+          <izz>0.000266</izz>
+        </inertia>
+      </inertial>
+      <!--collision name='RL_CALF_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/RL_CALF.STL</uri>
+          </mesh>
+        </geometry>
+      </collision-->
+      <visual name='RL_CALF_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/RL_CALF.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0 0 0 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <emissive>0 0 0 1</emissive>
+          <specular>0 0 0 0</specular>
+        </material>
+      </visual>
+    </link>
+    <joint name='RL_KN_JOINT' type='revolute'>
+      <pose relative_to='RL_THIGH'>0 0 -0.305 0 -0 0</pose>
+      <parent>RL_THIGH</parent>
+      <child>RL_CALF</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='RL_TIP'>
+      <pose relative_to='RL_KN_JOINT'>0 0 -0.28816 0 -0 0</pose>
+      <inertial>
+        <pose>0.000494 0 0.002943 0 -0 0</pose>
+        <mass>0.164603</mass>
+        <inertia>
+          <ixx>0.000088</ixx>
+          <ixy>0.000000</ixy>
+          <ixz>0.000000</ixz>
+          <iyy>0.000086</iyy>
+          <iyz>0.000000</iyz>
+          <izz>0.000073</izz>
+        </inertia>
+      </inertial>
+      <collision name='RL_TIP_collision'>
+        <pose>0 0 0 1.57 -0 0</pose>
+        <geometry>
+          <!--mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/RL_TIP.STL</uri>
+          </mesh-->
+          <cylinder>
+            <radius>0.031</radius>
+            <length>0.054</length>  
+          </cylinder>
+        </geometry>
+        <surface>
+          <bounce>
+            <restitution_coefficient> 0 </restitution_coefficient>
+          </bounce>
+          <friction>
+            <ode>
+              <mu>  100  </mu>
+              <mu2> 1  </mu2>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+      	      <kp>10000000</kp>
+              <kd>10000</kd>
+<!--               <max_vel>0.1</max_vel>
+              <min_depth>0.0001</min_depth> -->
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='RL_TIP_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/RL_TIP.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>153 153 153 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <emissive>0 0 0 1</emissive>
+          <specular>0 0 0 0</specular>
+        </material>
+      </visual>
+      <sensor name="RL_TIP_contact" type='contact'>
+       <contact>
+         <collision>RL_TIP_collision</collision>
+       </contact>
+      </sensor>
+    </link>
+    <joint name='RL_TIP_JOINT' type='fixed'>
+      <child>RL_TIP</child>
+      <parent>RL_CALF</parent>
+      <sensor name="RL_FT_SENSOR" type="force_torque">
+        <force_torque>
+          <frame>child</frame>
+          <measure_direction>child_to_parent</measure_direction>
+        </force_torque>
+        <!-- <visualize> True </visualize> -->
+      </sensor>      
+    </joint>
+    <link name='RR_HIP'>
+      <pose relative_to='RR_HR_JOINT'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>-0.0028 0.005227 0.001089 0 -0 0</pose>
+        <mass>1.5871</mass>
+        <inertia>
+          <ixx>0.001339</ixx>
+          <ixy>0.000009</ixy>
+          <ixz>-0.000001</ixz>
+          <iyy>0.001937</iyy>
+          <iyz>-0.000015</iyz>
+          <izz>0.001585</izz>
+        </inertia>
+      </inertial>
+      <!--collision name='RR_HIP_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/RR_HIP.STL</uri>
+          </mesh>
+        </geometry>
+      </collision-->
+      <visual name='RR_HIP_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/RR_HIP.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>244 67 54 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <emissive>0 0 0 1</emissive>
+          <specular>0 0 0 0</specular>
+        </material>
+      </visual>
+    </link>
+    <joint name='RR_HR_JOINT' type='revolute'>
+      <pose relative_to='BODY'>-0.31804 -0.1138 0 0 -0 0</pose>
+      <parent>BODY</parent>
+      <child>RR_HIP</child>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='RR_THIGH'>
+      <pose relative_to='RR_HP_JOINT'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>-0.000189 0.010257 -0.038433 0 -0 0</pose>
+        <mass>3.32</mass>
+        <inertia>
+          <ixx>0.028079</ixx>
+          <ixy>-0.000023</ixy>
+          <ixz>-0.000016</ixz>
+          <iyy>0.028442</iyy>
+          <iyz>0.001256</iyz>
+          <izz>0.003743</izz>
+        </inertia>
+      </inertial>
+      <!--collision name='RR_THIGH_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/RR_THIGH.STL</uri>
+          </mesh>
+        </geometry>
+      </collision-->
+      <visual name='RR_THIGH_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/RR_THIGH.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>244 67 54 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <emissive>0 0 0 1</emissive>
+          <specular>0 0 0 0</specular>
+        </material>
+      </visual>
+    </link>
+    <joint name='RR_HP_JOINT' type='revolute'>
+      <pose relative_to='RR_HIP'>0 -0.105 0 0 -0 0</pose>
+      <parent>RR_HIP</parent>
+      <child>RR_THIGH</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='RR_CALF'>
+      <pose relative_to='RR_KN_JOINT'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.000137 -0.003337 -0.081883 0 -0 0</pose>
+        <mass>0.57335</mass>
+        <inertia>
+          <ixx>0.005457</ixx>
+          <ixy>-0.000006</ixy>
+          <ixz>-0.000328</ixz>
+          <iyy>0.005379</iyy>
+          <iyz>-0.000191</iyz>
+          <izz>0.000266</izz>
+        </inertia>
+      </inertial>
+      <!--collision name='RR_CALF_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/RR_CALF.STL</uri>
+          </mesh>
+        </geometry>
+      </collision-->
+      <visual name='RR_CALF_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/RR_CALF.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0 0 0 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <emissive>0 0 0 1</emissive>
+          <specular>0 0 0 0</specular>
+        </material>
+      </visual>
+    </link>
+    <joint name='RR_KN_JOINT' type='revolute'>
+      <pose relative_to='RR_THIGH'>0 0 -0.305 0 -0 0</pose>
+      <parent>RR_THIGH</parent>
+      <child>RR_CALF</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='RR_TIP'>
+      <pose relative_to='RR_KN_JOINT'>0 0 -0.28816 0 -0 0</pose>
+      <inertial>
+       <pose>0.000494 0 0.002943 0 -0 0</pose>
+        <mass>0.1646</mass>
+        <inertia>
+          <ixx>0.000088</ixx>
+          <ixy>0.000000</ixy>
+          <ixz>0.000000</ixz>
+          <iyy>0.000086</iyy>
+          <iyz>0.000000</iyz>
+          <izz>0.000073</izz>
+        </inertia>
+      </inertial>
+      <collision name='RR_TIP_collision'>
+        <pose>0 0 0 1.57 -0 0</pose>
+        <geometry>
+<!--           <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/FL_TIP.STL</uri>
+          </mesh> -->
+          <cylinder>
+            <radius>0.031</radius>
+            <length>0.054</length>  
+          </cylinder>
+        </geometry>
+        <surface>
+          <bounce>
+            <restitution_coefficient> 0 </restitution_coefficient>
+          </bounce>
+          <friction>
+            <ode>
+              <mu>  100  </mu>
+              <mu2> 1  </mu2>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+      	      <kp>10000000</kp>
+              <kd>10000</kd>
+<!--               <max_vel>0.1</max_vel>
+              <min_depth>0.0001</min_depth> -->
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='RR_TIP_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://PONGBOT_Q_V2.0/meshes/RR_TIP.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>153 153 153 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <emissive>0 0 0 1</emissive>
+          <specular>0 0 0 0</specular>
+        </material>
+      </visual>
+      <sensor name="RR_TIP_contact" type='contact'>
+       <contact>
+         <collision>RR_TIP_collision</collision>
+       </contact>
+      </sensor>
+    </link>
+    <joint name='RR_TIP_JOINT' type='fixed'>
+      <child>RR_TIP</child>
+      <parent>RR_CALF</parent>
+      <sensor name="RR_FT_SENSOR" type="force_torque">
+        <force_torque>
+          <frame>child</frame>
+          <measure_direction>child_to_parent</measure_direction>
+        </force_torque>
+        <!-- <visualize> True </visualize> -->
+      </sensor>
+    </joint>
+  </model>
+</sdf>

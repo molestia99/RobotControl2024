@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="pongbot_q_robotcontrol2024">
+    <physics name="default_physics" default="0" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_update_rate>1000</real_time_update_rate>
+      <ode>
+        <solver>
+          <type>quick</type>
+          <iters>100</iters>
+          <sor>1.0</sor>
+          <use_dynamic_moi_rescaling>false</use_dynamic_moi_rescaling>
+        </solver>
+      </ode>
+    </physics>
+
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+
+   <include>
+      <uri>model://PONGBOT_Q_V2.0</uri>
+      <pose frame=''>0 0 0.7 0 0 0</pose>
+      <plugin name="plugin" filename="libpongbot_q_robotcontrol2024.so"/>
+   </include>
+
+
+  </world>
+</sdf>

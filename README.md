@@ -133,11 +133,11 @@ Tool Collection : **Default(GNU(GNU))**
 *`토큰은 생성 이후에 다시 확인할 수 없으니, 따로 저장해두어야 합니다.`*
 
 ## Simulation Manual 
-### 1.[Download](https://github.com/swan0421/RobotControl2023) and Setting RobotControl2023
-1. [RobotControl2023 Repository](https://github.com/swan0421/RobotControl2023)에 접속, link : https://github.com/swan0421/RobotControl2023
+### 1.[Download](https://github.com/swan0421/RobotControl2024) and Setting RobotControl2024
+1. [RobotControl2024 Repository](https://github.com/swan0421/RobotControl2024)에 접속, link : https://github.com/swan0421/RobotControl2024
 
 2. 해당 Repository에 접속 후, 우측 상단의 Fork를 클릭하여, 본인의 Github Repository에 복제되었는지 확인합니다.  
-(`swan0421/Robotcontrol2023` -> `User_id/Robotcontrol2023`)
+(`swan0421/Robotcontrol2024` -> `User_id/Robotcontrol2024`)
 ```
 Fork란?  
 
@@ -150,7 +150,7 @@ Fork한 Repository는 원본 Repository와 연결되어 있어,
 
 3. 복제된 본인의 Repository에 접속 후에, `Code ▼`라는 초록색 버튼이 있는데 클릭하여 URL 주소 (https:/~)을 복사하거나,`Download ZIP` 을 통해 해당 패키지를 다운 받습니다.
 
-4. NetBeans의 `Team` > `Git` > `clone` 을 누른후, `Repository URL`을 https://github.com/User_id/RobotControl2023.git 으로 설정합니다.  
+4. NetBeans의 `Team` > `Git` > `clone` 을 누른후, `Repository URL`을 https://github.com/User_id/RobotControl2024.git 으로 설정합니다.  
 `(본인의 Repository 경로)`  
 (만약, NetBeans에서 `Team` > `Git` > `clone` 경로가 보이지 않는 경우, NetBeans 화면 좌측에 있는 Projects 패널에서 catkin_ws 를 클릭하면 보이며, 위의 경로는 git에 연동되었을 때 활성화되는 경로이므로 처음 연동하는 것이라면, Team > git > clone으로 해도 됨)  
 User에는 GitHUB의 user_name을 쓰고, Password에는 GitHUB의 `Token password`를 입력한 후 NEXT를 누릅니다.
@@ -165,7 +165,7 @@ User에는 GitHUB의 user_name을 쓰고, Password에는 GitHUB의 `Token passwo
 
 <img width="1200" src="./NetBeans 16 Setting Guide/new/git_setting_02.png" alt="main page">  
 
-6. Parent Directory를 사용자의 `home/user_name/catkin_ws/src` 경로로 설정하고, Clone name을 사용자가 원하는 이름으로 설정하고, (참고 : Clone Name은 패키지에 관련된 이름으로 써서 다른 폴더들과 구별 지을 것, example: RobotControl2023) Checkout Branch는 `main*` 로 설정하고, Remote Name은 origin으로 설정한 후 Finish를 누릅니다.
+6. Parent Directory를 사용자의 `home/user_name/catkin_ws/src` 경로로 설정하고, Clone name을 사용자가 원하는 이름으로 설정하고, (참고 : Clone Name은 패키지에 관련된 이름으로 써서 다른 폴더들과 구별 지을 것, example: RobotControl2024) Checkout Branch는 `main*` 로 설정하고, Remote Name은 origin으로 설정한 후 Finish를 누릅니다.
 
 7. 정확하게 셋팅이 되었다면 다음과 같은 화면이 활성화 됩니다.
 
@@ -189,7 +189,7 @@ User에는 GitHUB의 user_name을 쓰고, Password에는 GitHUB의 `Token passwo
 ----
 
 
-### 2.Libraries used in RobotControl2023 Package
+### 2.Libraries used in RobotControl2024 Package
 
 | Library | Description |
 | ------ | ----------- |
@@ -202,7 +202,7 @@ RBDL의 재설치를 권장합니다. 사용자마다 `root` 계정 혹은 `user
 
 **RBDL Build**
 
-1. `RobotControl2023/src/RBDL/addons/urdfreader` 폴더 내에 있는 `CMakeList.txt` 파일에 `include_directories`를 다음과 같이 추가해줍니다.
+1. `RobotControl2024/src/RBDL/addons/urdfreader` 폴더 내에 있는 `CMakeList.txt` 파일에 `include_directories`를 다음과 같이 추가해줍니다.
 * Before : 
 ``` js
 IF (DEFINED ENV{ROS_ROOT})
@@ -222,7 +222,7 @@ RBDL 폴더에서 터미널 창을 켜고 아래의 명령어를 입력함으로
 ``` js
 RBDL 폴더 -> 오른쪽 마우스 클릭 -> Open in Terminal
 또는
-cd catkin_ws/src/RobotControl2023/src/RBDL
+cd catkin_ws/src/RobotControl2024/src/RBDL
 
 mkdir build 
 cd build/ 
@@ -234,7 +234,7 @@ sudo make install
 3. 그리고 다시 패키지를 컴파일하기 위해 Netbeans에서 터미널 창을 열거나 기본 터미널 창에서 `cd ~/catkin_ws && catkin_make`을 입력하여 컴파일을 진행합니다.
 ----
 
-### 3.How to run RobotControl2023 package
+### 3.How to run RobotControl2024 package
 #### **!! 시뮬레이션 실행 전에 확인 해야하거나 셋팅 !!**
 
 **Setting Floating Dynamics in `rb1_500e.world`**
@@ -255,9 +255,9 @@ sudo make install
 ```
 
 * #### Check `model.urdf` file path for using RBDL in `main.cpp`
-* `main.cpp`는 Gazebo main code 이며, `/catkin_ws/src/RobotControl2023/src`에 있습니다.
+* `main.cpp`는 Gazebo main code 이며, `/catkin_ws/src/RobotControl2024/src`에 있습니다.
 * **그리고, `main.cpp`에서 사용자는 반드시 `Load(physics::ModelPtr _model, sdf::ElementPtr /*_sdf*/)`함수에서, 아래 코드 예시와 같이 `Addons::URDFReadFromFile()` 함수 안에 적용되어 있는 `RB1_500e.urdf`의 경로를 확인해주시고, 틀린다면 바로잡아주시기 바랍니다.**
-* **`RB1_500e.urdf`는 `/home/user_name/catkin_ws/src/RobotControl2023/urdf` 폴더에 있으며, 파일 속성 확인을 통해 정확한 경로 확인하시기 바랍니다.**  
+* **`RB1_500e.urdf`는 `/home/user_name/catkin_ws/src/RobotControl2024/urdf` 폴더에 있으며, 파일 속성 확인을 통해 정확한 경로 확인하시기 바랍니다.**  
 
 **In `main.cpp`**
 ``` js
