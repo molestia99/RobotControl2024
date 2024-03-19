@@ -43,8 +43,8 @@ add_library(${PROJECT_NAME}
    src/pongbotq_plugin.cc  
    
    #src/CRobot/CRobot.cpp
-   src/CRobot/nrutil/nrutil.cpp
-   src/CRobot/nrutil/nrlin.cpp
+#   src/CRobot/nrutil/nrutil.cpp
+   #src/CRobot/nrutil/nrlin.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}

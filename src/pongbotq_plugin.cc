@@ -185,6 +185,21 @@ namespace gazebo
             RRKP       
         };
 
+        // AXIS
+        enum AXIS_XYZ
+        {
+            AXIS_X = 0,
+            AXIS_Y,
+            AXIS_Z
+        };
+
+        enum AXIS_RPY
+        {
+            AXIS_ROLL = 0,
+            AXIS_PITCH,
+            AXIS_YAW
+        };
+
         //** Data Structure
         //Joint
         struct Joint
@@ -210,14 +225,21 @@ namespace gazebo
         struct Body
         {
             // Target values
-            float TargetPhi = 0.;
-            float TargetTheta = 0.;
-            float TargetPsi = 0.;
+            // float TargetPhi = 0.;
+            // float TargetTheta = 0.;
+            // float TargetPsi = 0.;
+
+            float TargetAngularVel[3];
+            float TargetLinearAcc[3];
+            float TargetAngle[3];
 
             // Actual values
-            float ActualPhi = 0.;
-            float ActualTheta = 0.;
-            float ActualPsi = 0.;
+            // float ActualPhi = 0.;
+            // float ActualTheta = 0.;
+            // float ActualPsi = 0.;
+            float ActualAngularVel[3];
+            float ActualLinearAcc[3];
+            float ActualAngle[3];
         };
 
 
@@ -232,11 +254,12 @@ namespace gazebo
         void Load(physics::ModelPtr _model, sdf::ElementPtr /*_sdf*/);
         void UpdateAlgorithm();
         void JointController();
+        void SensorSetting();
                 
         void GetLinks();
         void GetJoints();
       
-        // void IMUSensorRead();
+        void IMUSensorRead();
       
         void EncoderRead();       
 
@@ -267,6 +290,7 @@ void gazebo::PongBot_plugin::Load(physics::ModelPtr _model, sdf::ElementPtr /*_s
     
     GetLinks();
     GetJoints();
+    SensorSetting();
     
     //* RBDL API Version Check
     int version_test;
@@ -299,18 +323,18 @@ void gazebo::PongBot_plugin::UpdateAlgorithm() {
     this->LastUpdatedTime = CurrentTime;
         
     EncoderRead();
-    // IMUSensorRead();
+    IMUSensorRead();
     // std::cout << "time in UpdateAlgorithm: " << time << std::endl;
     // std::cout << "  dt in UpdateAlgorithm: " << dt << std::endl;
         
     //* Real or simulated real-time thread time setting
-    for(size_t i = 0; i < DoF; ++i){
-        std::cout << "*********************************************" << std::endl;
-        std::cout << i << "th Target Pos: " << mJoint[i].TargetPos << std::endl;
-        std::cout << i << "th Actual Pos: " << mJoint[i].ActualPos << std::endl;        
-        std::cout << i << "th Target Vel: " << mJoint[i].TargetVel << std::endl;
-        std::cout << i << "th Actual Vel: " << mJoint[i].ActualVel << std::endl;
-    }
+    // for(size_t i = 0; i < DoF; ++i){
+    //     std::cout << "*********************************************" << std::endl;
+    //     std::cout << i << "th Target Pos: " << mJoint[i].TargetPos << std::endl;
+    //     std::cout << i << "th Actual Pos: " << mJoint[i].ActualPos << std::endl;        
+    //     std::cout << i << "th Target Vel: " << mJoint[i].TargetVel << std::endl;
+    //     std::cout << i << "th Actual Vel: " << mJoint[i].ActualVel << std::endl;
+    // }
     
 
     JointController();
@@ -379,13 +403,13 @@ void gazebo::PongBot_plugin::GetJoints() {
 // }
 
 
-// void gazebo::PongBot_plugin::SensorSetting() {
-//     /* SensorSetting
-//      * Initialize IMU Setting(GAZEBO)
-//      */
-//     this->Sensor = sensors::get_sensor("IMU");
-//     this->IMU = std::dynamic_pointer_cast<sensors::ImuSensor>(Sensor);
-// }
+void gazebo::PongBot_plugin::SensorSetting() {
+    /* SensorSetting
+     * Initialize IMU Setting(GAZEBO)
+     */
+    this->Sensor = sensors::get_sensor("IMU");
+    this->IMU = std::dynamic_pointer_cast<sensors::ImuSensor>(Sensor);
+}
 
 void gazebo::PongBot_plugin::EncoderRead() {
     /* EncoderRead
@@ -438,7 +462,7 @@ void gazebo::PongBot_plugin::JointController(void) {
     //** Simple PD Controller
     for(size_t i = 0; i < DoF; ++i){
         mJoint[i].TargetTorque = mJoint[i].Kp*(mJoint[i].TargetPos - mJoint[i].ActualPos) + mJoint[i].Kd*(mJoint[i].TargetVel - mJoint[i].ActualVel);
-        std::cout << i << "th joint torque: " << mJoint[i].TargetTorque << std::endl;
+        // std::cout << i << "th joint torque: " << mJoint[i].TargetTorque << std::endl;
     }
 
 //     /* JointController
@@ -461,43 +485,49 @@ void gazebo::PongBot_plugin::JointController(void) {
     this->RR_KN_JOINT->SetForce(0, mJoint[11].TargetTorque);  
 }
 
-// // void gazebo::PongBot_plugin::IMUSensorRead() {
-// //     // IMU sensor data    
-// //     static double IMU_CurrentAngle[3], IMU_CurrentAngularVel[3], IMU_CurrentLinearAcc[3];
-    
-// //     #if GAZEBO_MAJOR_VERSION >= 8
-// //         IMU_CurrentAngularVel[AXIS_ROLL]    = this->IMU->AngularVelocity(false)[AXIS_ROLL];
-// //         IMU_CurrentAngularVel[AXIS_PITCH]   = this->IMU->AngularVelocity(false)[AXIS_PITCH];
-// //         IMU_CurrentAngularVel[AXIS_YAW]     = this->IMU->AngularVelocity(false)[AXIS_YAW];
-        
-// //         IMU_CurrentLinearAcc[AXIS_X]        = this->IMU->LinearAcceleration()[AXIS_X];
-// //         IMU_CurrentLinearAcc[AXIS_Y]        = this->IMU->LinearAcceleration()[AXIS_Y];
-// //         IMU_CurrentLinearAcc[AXIS_Z]        = this->IMU->LinearAcceleration()[AXIS_Z];
-        
-// //         IMU_CurrentAngle[AXIS_ROLL]         = this->IMU->Orientation().Euler()[AXIS_ROLL];
-// //         IMU_CurrentAngle[AXIS_PITCH]        = this->IMU->Orientation().Euler()[AXIS_PITCH];
-// //         IMU_CurrentAngle[AXIS_YAW]          = this->IMU->Orientation().Euler()[AXIS_YAW];
-        
-// //     #else
-// //         IMU_CurrentAngularVel[AXIS_ROLL]    = this->IMU->AngularVelocity(false)[AXIS_ROLL];
-// //         IMU_CurrentAngularVel[AXIS_PITCH]   = this->IMU->AngularVelocity(false)[AXIS_PITCH];
-// //         IMU_CurrentAngularVel[AXIS_YAW]     = this->IMU->AngularVelocity(false)[AXIS_YAW];
+void gazebo::PongBot_plugin::IMUSensorRead() {
+    // IMU sensor data    
+    // static double IMU_CurrentAngle[3], IMU_CurrentAngularVel[3], IMU_CurrentLinearAcc[3];
 
-// //         IMU_CurrentAngle[AXIS_ROLL]         = this->IMU->Orientation().Euler()[AXIS_ROLL];
-// //         IMU_CurrentAngle[AXIS_PITCH]        = this->IMU->Orientation().Euler()[AXIS_PITCH];
-// //         IMU_CurrentAngle[AXIS_YAW]          = this->IMU->Orientation().Euler()[AXIS_YAW];
-// //     #endif
-        
-// //     // PongBot.imu.AngularVel[AXIS_ROLL]       = IMU_CurrentAngularVel[AXIS_ROLL];
-// //     // PongBot.imu.AngularVel[AXIS_PITCH]      = IMU_CurrentAngularVel[AXIS_PITCH];
-// //     // PongBot.imu.AngularVel[AXIS_YAW]        = IMU_CurrentAngularVel[AXIS_YAW];
-
-// //     // PongBot.imu.LinearAcc[AXIS_X]           = IMU_CurrentLinearAcc[AXIS_X];
-// //     // PongBot.imu.LinearAcc[AXIS_Y]           = IMU_CurrentLinearAcc[AXIS_Y];
-// //     // PongBot.imu.LinearAcc[AXIS_Z]           = IMU_CurrentLinearAcc[AXIS_Z];
     
-// //     // PongBot.imu.TempOri_ZYX(AXIS_ROLL)      = IMU_CurrentAngle[AXIS_ROLL];
-// //     // PongBot.imu.TempOri_ZYX(AXIS_PITCH)     = IMU_CurrentAngle[AXIS_PITCH];
-// //     // PongBot.imu.TempOri_ZYX(AXIS_YAW)       = IMU_CurrentAngle[AXIS_YAW];            
-// // }
+    #if GAZEBO_MAJOR_VERSION >= 8
+        mBody.ActualAngularVel[AXIS_ROLL]    = static_cast<float>(this->IMU->AngularVelocity(false)[AXIS_ROLL]);
+        mBody.ActualAngularVel[AXIS_PITCH]   = static_cast<float>(this->IMU->AngularVelocity(false)[AXIS_PITCH]);
+        mBody.ActualAngularVel[AXIS_YAW]     = static_cast<float>(this->IMU->AngularVelocity(false)[AXIS_YAW]);
+        
+        mBody.ActualLinearAcc[AXIS_X]        = static_cast<float>(this->IMU->LinearAcceleration()[AXIS_X]);
+        mBody.ActualLinearAcc[AXIS_Y]        = static_cast<float>(this->IMU->LinearAcceleration()[AXIS_Y]);
+        mBody.ActualLinearAcc[AXIS_Z]        = static_cast<float>(this->IMU->LinearAcceleration()[AXIS_Z]);
+        
+        mBody.ActualAngle[AXIS_ROLL]         = static_cast<float>(this->IMU->Orientation().Euler()[AXIS_ROLL]);
+        mBody.ActualAngle[AXIS_PITCH]        = static_cast<float>(this->IMU->Orientation().Euler()[AXIS_PITCH]);
+        mBody.ActualAngle[AXIS_YAW]          = static_cast<float>(this->IMU->Orientation().Euler()[AXIS_YAW]);
+        
+    #else
+        // mBody.ActualAngularVel[AXIS_ROLL]    = this->IMU->AngularVelocity(false)[AXIS_ROLL];
+        // mBody.ActualAngularVel[AXIS_PITCH]   = this->IMU->AngularVelocity(false)[AXIS_PITCH];
+        // mBody.ActualAngularVel[AXIS_YAW]     = this->IMU->AngularVelocity(false)[AXIS_YAW];
+
+        // mBody.ActualAngle[AXIS_ROLL]         = this->IMU->Orientation().Euler()[AXIS_ROLL];
+        // mBody.ActualAngle[AXIS_PITCH]        = this->IMU->Orientation().Euler()[AXIS_PITCH];
+        // mBody.ActualAngle[AXIS_YAW]          = this->IMU->Orientation().Euler()[AXIS_YAW];
+    #endif
+
+    std::cout << "!!" << std::endl;
+    for(size_t i = 0; i < 3; ++i){
+        std::cout << mBody.ActualLinearAcc[i] << std::endl;
+    }
+        
+    // PongBot.imu.AngularVel[AXIS_ROLL]       = IMU_CurrentAngularVel[AXIS_ROLL];
+    // PongBot.imu.AngularVel[AXIS_PITCH]      = IMU_CurrentAngularVel[AXIS_PITCH];
+    // PongBot.imu.AngularVel[AXIS_YAW]        = IMU_CurrentAngularVel[AXIS_YAW];
+
+    // PongBot.imu.LinearAcc[AXIS_X]           = IMU_CurrentLinearAcc[AXIS_X];
+    // PongBot.imu.LinearAcc[AXIS_Y]           = IMU_CurrentLinearAcc[AXIS_Y];
+    // PongBot.imu.LinearAcc[AXIS_Z]           = IMU_CurrentLinearAcc[AXIS_Z];
+    
+    // PongBot.imu.TempOri_ZYX(AXIS_ROLL)      = IMU_CurrentAngle[AXIS_ROLL];
+    // PongBot.imu.TempOri_ZYX(AXIS_PITCH)     = IMU_CurrentAngle[AXIS_PITCH];
+    // PongBot.imu.TempOri_ZYX(AXIS_YAW)       = IMU_CurrentAngle[AXIS_YAW];            
+}
 
