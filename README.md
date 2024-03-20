@@ -195,6 +195,8 @@ User에는 GitHUB의 user_name을 쓰고, Password에는 GitHUB의 `Token passwo
 | ------ | ----------- |
 | [Eigen](https://eigen.tuxfamily.org/index.php?title=Main_Page)   | Eigen is a C++ template library for linear algebra: matrices, vectors, numerical solvers, and related algorithms.|
 | [RBDL](https://rbdl.github.io/) | RBDL library contains highly efficient code for both forward and inverse dynamics for kinematic chains and branched models. |
+| [OSQP](https://osqp.org) | OSQP is an optimization solver for Quadratic Programs (QPs) that uses the Alternating Direction Method of Multipliers (ADMM). |
+
 
 **Recommended to re-install RBDL**
 RBDL의 재설치를 권장합니다. 사용자마다 `root` 계정 혹은 `user` 계정으로 하기 때문에, Build 하는 과정에서 문제가 발생할 수 있습니다. 따라서, 다음과 같이 재설치를 해주시기 바랍니다. 본 패키지를 `root` 계정에서 사용할 경우, 재설치가 필요없을 수 있습니다.
@@ -213,6 +215,11 @@ RBDL의 재설치를 권장합니다. 사용자마다 `root` 계정 혹은 `user
      > cd ~/RBDL && mkdir build
      > cd build && cmake -DRBDL_BUILD_ADDON_URDFREADER=ON CMAKE_BUILD_TYPE=Release ../
      > sudo make && sudo make install
+
+**OSQP Install**
+OSQP 라이브러리는 Quadratic Programming 문제를 풀어주는 Solver 입니다.
+연구실에서 제작한 OSQP Install guide 를 참조합니다.
+https://www.youtube.com/watch?v=SICrCNQ-ehQ&list=PLyQSXjkp0qDbw26ghtIcgW9ok58LAtUEp&index=3
 
 ----
 
@@ -471,7 +478,7 @@ roslaunch pongbot_q_robotcontrol2024 pongbot_q.launch
 **시뮬레이션이 정상적으로 실행될 경우, 아래 사진처럼 Gazebo Simulator 에 4족 보행 로봇 PongBot-Q 가 나타납니다.**
 **아래 사진에서, 모든 관절이 0도에 위치했습니다.**
 
-<img width="200" src="./NetBeans 16 Setting Guide/pongbot/gazebo_main_start.png" alt="robot image"> 
+<img width="600" src="./NetBeans 16 Setting Guide/pongbot/gazebo_main_start.png" alt="robot image"> 
 
 
 

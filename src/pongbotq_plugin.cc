@@ -42,10 +42,11 @@
 
 // #include <fstream>  // 외부 텍스트파일을 읽기 위해 넣었음
 
-//* Header file for RBDL and Eigen
+//* Header file for RBDL, OSQP and Eigen
 #include <rbdl/rbdl.h>                              // Rigid Body Dynamics Library (RBDL)
 #include <rbdl/addons/urdfreader/urdfreader.h>      // urdf model read using RBDL
 #include <Eigen/Dense>                              // Eigen is a C++ template library for linear algebra: matrices, vectors, numerical solvers, and related algorithms.
+#include "osqp.h"
 
 #define PI      3.141592
 #define D2R     PI/180.
@@ -266,6 +267,8 @@ namespace gazebo
       
     };
     GZ_REGISTER_MODEL_PLUGIN(PongBot_plugin);
+
+    
 }
 
 void gazebo::PongBot_plugin::Load(physics::ModelPtr _model, sdf::ElementPtr /*_sdf*/) {    
@@ -337,6 +340,8 @@ void gazebo::PongBot_plugin::UpdateAlgorithm() {
 
     JointController();
     // con_count++;
+
+    OSQPFloat P_x[3] = {1., 2., 3.};
 }
 
 void gazebo::PongBot_plugin::GetLinks() {
