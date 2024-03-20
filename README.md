@@ -197,7 +197,6 @@ User에는 GitHUB의 user_name을 쓰고, Password에는 GitHUB의 `Token passwo
 | [RBDL](https://rbdl.github.io/) | RBDL library contains highly efficient code for both forward and inverse dynamics for kinematic chains and branched models. |
 
 **Recommended to re-install RBDL**
-
 RBDL의 재설치를 권장합니다. 사용자마다 `root` 계정 혹은 `user` 계정으로 하기 때문에, Build 하는 과정에서 문제가 발생할 수 있습니다. 따라서, 다음과 같이 재설치를 해주시기 바랍니다. 본 패키지를 `root` 계정에서 사용할 경우, 재설치가 필요없을 수 있습니다.
 
 **RBDL Build**
@@ -242,7 +241,7 @@ RBDL의 재설치를 권장합니다. 사용자마다 `root` 계정 혹은 `user
 * **그리고, `pongbotq_plugin.cc`에서 사용자는 반드시 `Load(physics::ModelPtr _model, sdf::ElementPtr /*_sdf*/)`함수에서, 아래 코드 예시와 같이 `Addons::URDFReadFromFile()` 함수 안에 적용되어 있는 `PONGBOT_Q_V2.0.urdf`의 경로를 확인해주시고, 틀리다면 바로잡아주시기 바랍니다.**
 * **`PONGBOT_Q_V2.0.urdf`는 `/home/user_name/.gazebo/models/PONGBOT_Q_V2.0/urdf` 폴더에 있으며, 파일 속성 확인을 통해 정확한 경로 확인하시기 바랍니다.**  
 
-**In `main.cpp`**
+**In `pongbotq_plugin.cc`**
 ``` js
 void gazebo::PongBot_plugin::Load(physics::ModelPtr _model, sdf::ElementPtr /*_sdf*/) {    
     
@@ -472,7 +471,7 @@ roslaunch pongbot_q_robotcontrol2024 pongbot_q.launch
 **시뮬레이션이 정상적으로 실행될 경우, 아래 사진처럼 Gazebo Simulator 에 4족 보행 로봇 PongBot-Q 가 나타납니다.**
 **아래 사진에서, 모든 관절이 0도에 위치했습니다.**
 
-<img width="200" src="./NetBeans 16 Setting Guide/new/gazebo_main_start.png" alt="robot image"> 
+<img width="200" src="./NetBeans 16 Setting Guide/pongbot/gazebo_main_start.png" alt="robot image"> 
 
 
 
