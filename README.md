@@ -466,18 +466,20 @@ alias cm='cd ~/catkin_ws && catkin_make'
 **최종적으로, 다음과 같은 명령어를 통해 시뮬레이션 실행**
 
 ```
-roslaunch rb1_500e_study rb1_500e.launch
+roslaunch pongbot_q_robotcontrol2024 pongbot_q.launch
 ```
 
-**로봇을 정상적으로 불러오면 6자유의 로봇팔이 나타나며 로봇팔의 기구 정보는 다음과 같습니다.**
+**시뮬레이션이 정상적으로 실행될 경우, 아래 사진처럼 Gazebo Simulator 에 4족 보행 로봇 PongBot-Q 가 나타납니다.**
+**아래 사진에서, 모든 관절이 0도에 위치했습니다.**
 
-<img width="200" src="./NetBeans 16 Setting Guide/new/rb1-500e kinematic structure.png" alt="robot image">  <img width="150" src="./NetBeans 16 Setting Guide/new/rb1-500e solidworks image.png" alt="robot image">  
+<img width="200" src="./NetBeans 16 Setting Guide/new/gazebo_main_start.png" alt="robot image"> 
+
 
 
 
 ## 1. 실습 1 : 3-Link Planar Arm의 Forward Kinematics
 * void Practice() 함수 만들기
-```c
+```
 void Practice()
 ```
 * Practice() 함수안에 matrix 생성 및 터미널창에 인쇄하기
