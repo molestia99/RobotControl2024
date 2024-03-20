@@ -1,4 +1,4 @@
-# [2024-2] Robot Control 실습
+# [2024-1] Robot Control 실습
 
 
 #### Gazebo Simulation for PongBot-Q.
@@ -14,7 +14,7 @@
 ----
 
 ## What to do before simulation 
-1. Install ubuntu 20.04 and ROK-Noetic.
+1. Install ubuntu 20.04 and ROS-Noetic.
    - [ROS-Noetic](http://wiki.ros.org/noetic/Installation/Ubuntu) install, link : http://wiki.ros.org/noetic/Installation/Ubuntu
 2. Normally, when you install the ROS-noetic, Gazebo, which version is 11, is installed.
    However, If you want to find the extra information for Gazebo simulator, click the links below.
@@ -176,14 +176,14 @@ User에는 GitHUB의 user_name을 쓰고, Password에는 GitHUB의 `Token passwo
     3. 다음으로 넘어가면 Complie command 창이 나오는데 이 부분은 일단 넘어갑니다.
     4. 그리고 난뒤에 finish를 눌러주면 됩니다.
 
-8. 사용자의 catkin_ws/src 위치에 Step5에서 설정한 Clone Name 을 갖는 폴더가 있는지 확인하고, 폴더 내부에 패키지 구성 파일들(world 폴더, src 폴더, launch 폴더 등)과 model 압축파일 (=`[Model]RB1_500e.tar.xz`)이 있는지 확인합니다.
+8. 사용자의 catkin_ws/src 위치에 Step5에서 설정한 Clone Name 을 갖는 폴더가 있는지 확인하고, 폴더 내부에 패키지 구성 파일들(world 폴더, src 폴더, launch 폴더, pongbot_model 폴더 등)을 확인합니다.
 
-9. `[Model]RB1_500e.tar.xz` 파일을 압축 푼뒤에 `[Model]RB1_500e`폴더 안에 있는 `RB1_500e`를 `HOME/.gazebo/models/` 폴더로 가져와서 시뮬레이션을 위한 파일 셋팅을 마무리합니다.  
+9. `pongbot_model`폴더 안에 있는 `PONGBOT_Q_V2.0 폴더`를 복사하여 `HOME/.gazebo/models/` 폴더 내부에 붙여넣기합니다.
 ***(`.gazebo` 폴더가 보이지 않으면,  Home 폴더에서, `Ctrl+H` 를 눌러서 폴더 숨김 해제를 할 것)***  
 ***(Gazebo를 실행한 적이 없는 경우, 숨김해제를 하여도 폴더가 보이지 않을 수 있음. Terminal 에서 `gazebo`를 입력하여 한번 실행해준 후 다시 확인할 것)***
          
 10. 패키지를 컴파일하기 위해 Netbeans에서 터미널 창을 열거나 기본 터미널 창에서 `cd ~/catkin_ws && catkin_make`을 입력하여 컴파일을 진행합니다. 
-***(터미널 창이 안보인다면, Netbeans의 상단 `Winodow > IDE Tools > Termianl` 을 클릭)***
+***(터미널 창이 안보인다면, Netbeans의 상단 `Window > IDE Tools > Terminal` 을 클릭)***
 
 11. 만약, `catkin_make`가 안될 경우, section 2를 해보시기 바랍니다.
 ----
@@ -201,37 +201,20 @@ User에는 GitHUB의 user_name을 쓰고, Password에는 GitHUB의 `Token passwo
 RBDL의 재설치를 권장합니다. 사용자마다 `root` 계정 혹은 `user` 계정으로 하기 때문에, Build 하는 과정에서 문제가 발생할 수 있습니다. 따라서, 다음과 같이 재설치를 해주시기 바랍니다. 본 패키지를 `root` 계정에서 사용할 경우, 재설치가 필요없을 수 있습니다.
 
 **RBDL Build**
+1. Boost Library 를 하기 링크를 통해 다운받습니다. boost_1_81_0.tar.gz 파일을 다운받습니다.
+     >  https://www.boost.org/users/history/version_1_81_0.html
 
-1. `RobotControl2024/src/RBDL/addons/urdfreader` 폴더 내에 있는 `CMakeList.txt` 파일에 `include_directories`를 다음과 같이 추가해줍니다.
-* Before : 
-``` js
-IF (DEFINED ENV{ROS_ROOT})
-	MESSAGE (STATUS "ROS found: $ENV{ROS_ROOT}")
-	find_package(catkin REQUIRED COMPONENTS urdf)
-```
-* After :
-``` js
-IF (DEFINED ENV{ROS_ROOT})
-	MESSAGE (STATUS "ROS found: $ENV{ROS_ROOT}")
-	find_package(catkin REQUIRED COMPONENTS urdf)
-	include_directories(include ${catkin_INCLUDE_DIRS})
-```
+2. 압축을 푼 뒤, 설치를 진행합니다.
+     > tar -xvf <file name> (at the directory of zip installation.)
+     > cd <folder name> && ./bootstrap.sh
+     > ./b2 install
 
-2. RBDL make & install (**build 폴더가 존재할 경우, 삭제**)
-RBDL 폴더에서 터미널 창을 켜고 아래의 명령어를 입력함으로써, RBDL 재설치를 끝냅니다.
-``` js
-RBDL 폴더 -> 오른쪽 마우스 클릭 -> Open in Terminal
-또는
-cd catkin_ws/src/RobotControl2024/src/RBDL
+3. RBDL Library 를 다운로드 및 설치합니다.
+     > git clone --recursive https://github.com/ORB-HD/rbdl-orb/RBDL
+     > cd ~/RBDL && mkdir build
+     > cd build && cmake -DRBDL_BUILD_ADDON_URDFREADER=ON CMAKE_BUILD_TYPE=Release ../
+     > sudo make && sudo make install
 
-mkdir build 
-cd build/ 
-cmake -D CMAKE_BUILD_TYPE=Release ../
-cmake -D RBDL_BUILD_ADDON_URDFREADER=true ../
-make 
-sudo make install
-```
-3. 그리고 다시 패키지를 컴파일하기 위해 Netbeans에서 터미널 창을 열거나 기본 터미널 창에서 `cd ~/catkin_ws && catkin_make`을 입력하여 컴파일을 진행합니다.
 ----
 
 ### 3.How to run RobotControl2024 package
