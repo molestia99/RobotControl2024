@@ -282,8 +282,6 @@ void gazebo::PongBot_plugin::Load(physics::ModelPtr _model, sdf::ElementPtr /*_s
     std::cout << "Total DoF: " << DoF << std::endl;
 
 
-
-
     //* model.sdf file based model data input to [physics::ModelPtr model] for gazebo simulation
     this->model = _model;
     

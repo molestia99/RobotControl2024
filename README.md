@@ -237,97 +237,71 @@ sudo make install
 ### 3.How to run RobotControl2024 package
 #### **!! 시뮬레이션 실행 전에 확인 해야하거나 셋팅 !!**
 
-**Setting Floating Dynamics in `rb1_500e.world`**
+**Setting Floating Dynamics in `pongbot_q_robotcontrol2024.world`**
 ``` js
 <?xml version="1.0" ?>
 <sdf version="1.6">
-  <world name="rb1_500e">
+  <world name="pongbot_q_robotcontrol2024">
 .
 .
 .
     <include>
-      <uri>model://RB1_500e</uri>
+      <uri>model://PONGBOT_Q_V2.0</uri>
       <pose frame=''>0 0 0 0 0 0</pose>
-      <plugin name="main" filename="librb1_500e_study.so"/> 
+      <plugin name="plugin" filename="libpongbot_q_robotcontrol2024.so"/>
     </include>
   </world>
 </sdf>
 ```
 
-* #### Check `model.urdf` file path for using RBDL in `main.cpp`
-* `main.cpp`는 Gazebo main code 이며, `/catkin_ws/src/RobotControl2024/src`에 있습니다.
-* **그리고, `main.cpp`에서 사용자는 반드시 `Load(physics::ModelPtr _model, sdf::ElementPtr /*_sdf*/)`함수에서, 아래 코드 예시와 같이 `Addons::URDFReadFromFile()` 함수 안에 적용되어 있는 `RB1_500e.urdf`의 경로를 확인해주시고, 틀린다면 바로잡아주시기 바랍니다.**
-* **`RB1_500e.urdf`는 `/home/user_name/catkin_ws/src/RobotControl2024/urdf` 폴더에 있으며, 파일 속성 확인을 통해 정확한 경로 확인하시기 바랍니다.**  
+* #### Check `model.urdf` file path for using RBDL in `pongbotq_plugin.cc`
+* `pongbotq_plugin.cc`는 Gazebo main code 이며, `/catkin_ws/src/RobotControl2024/src`에 있습니다.
+* **그리고, `pongbotq_plugin.cc`에서 사용자는 반드시 `Load(physics::ModelPtr _model, sdf::ElementPtr /*_sdf*/)`함수에서, 아래 코드 예시와 같이 `Addons::URDFReadFromFile()` 함수 안에 적용되어 있는 `PONGBOT_Q_V2.0.urdf`의 경로를 확인해주시고, 틀리다면 바로잡아주시기 바랍니다.**
+* **`PONGBOT_Q_V2.0.urdf`는 `/home/user_name/.gazebo/models/PONGBOT_Q_V2.0/urdf` 폴더에 있으며, 파일 속성 확인을 통해 정확한 경로 확인하시기 바랍니다.**  
 
 **In `main.cpp`**
 ``` js
-void gazebo::RB1_500E::Load(physics::ModelPtr _model, sdf::ElementPtr /*_sdf*/)
-{
-    /*
-     * Loading model data and initializing the system before simulation 
-     */
+void gazebo::PongBot_plugin::Load(physics::ModelPtr _model, sdf::ElementPtr /*_sdf*/) {    
+    
+
+    //** for using RBDL library
+    Model* PONGBOT_MODEL = new Model();
+
+    //** wonsukji 대신, 각 사용자의 pc name 을 적어주어야 함
+    Addons::URDFReadFromFile("/home/wonsukji/.gazebo/models/PONGBOT_Q_V2.0/urdf/PONGBOT_Q_V2.0.urdf", PONGBOT_MODEL, true, false);
+    
+    //** Floating dynamics 로 인해, RBDL 에서 읽는 총 자유도는 6 더 크게 읽힘.
+    DoF = PONGBOT_MODEL->dof_count - 6;
+    mJoint = new Joint[DoF];
+
+    std::cout << "Total DoF: " << DoF << std::endl;
+
 
     //* model.sdf file based model data input to [physics::ModelPtr model] for gazebo simulation
-
-    int argc = 0;
-    char** argv = NULL;
-    ros::init(argc, argv, "RB1_500E");
-    ROS_INFO("PLUGIN_LOADED");
-
-    printf("\n Loading Complete \n");
-    
     this->model = _model;
+    
+    
+    GetLinks();
+    GetJoints();
+    SensorSetting();
+    
+    //* RBDL API Version Check
+    int version_test;
+    version_test = rbdl_get_api_version();
+    printf(C_MAGENTA "RBDL API version = %d\n" C_RESET, version_test);
 
-    #if GazeboVersion < 8
-        this->BASE_LINK = this->model->GetLink("BASE_LINK");
-        this->LINK1 = this->model->GetLink("LINK1");
-        this->LINK2 = this->model->GetLink("LINK2");
-        this->LINK3 = this->model->GetLink("LINK3");
-        this->LINK4 = this->model->GetLink("LINK4");
-        this->LINK5 = this->model->GetLink("LINK5");
-        this->LINK6 = this->model->GetLink("LINK6");
-        
-        this->JT0 = this->model->GetJoint("JT0");
-        this->JT1 = this->model->GetJoint("JT1");
-        this->JT2 = this->model->GetJoint("JT2");
-        this->JT3 = this->model->GetJoint("JT3");
-        this->JT4 = this->model->GetJoint("JT4");
-        this->JT5 = this->model->GetJoint("JT5");
-        this->last_update_time = this->model->GetWorld()->GetSimTime();
+    #if GAZEBO_MAJOR_VERSION >= 8
+        this->LastUpdatedTime = this->model->GetWorld()->SimTime();
     #else
-        BASE_LINK = this->model->GetLink("BASE_LINK");
-        LINK1 = this->model->GetLink("LINK1");
-        LINK2 = this->model->GetLink("LINK2");
-        LINK3 = this->model->GetLink("LINK3");
-        LINK4 = this->model->GetLink("LINK4");
-        LINK5 = this->model->GetLink("LINK5");
-        LINK6 = this->model->GetLink("LINK6");
-        
-        JT0 = this->model->GetJoint("JT0");
-        JT1 = this->model->GetJoint("JT1");
-        JT2 = this->model->GetJoint("JT2");
-        JT3 = this->model->GetJoint("JT3");
-        JT4 = this->model->GetJoint("JT4");
-        JT5 = this->model->GetJoint("JT5");
-
-        last_update_time = model->GetWorld()->SimTime();
+        this->LastUpdatedTime = this->model->GetWorld()->GetSimTime();
     #endif
+    this->UpdateConnection = event::Events::ConnectWorldUpdateBegin(boost::bind(&PongBot_plugin::UpdateAlgorithm, this));
     
-    //* RBDL setting
-    printf("\n RBDL load start \n");
-    Addons::URDFReadFromFile(RB1_500e_MODEL_DIR, _rb.rb1_500e_model, false, false);
-    _rb.rb1_500e_model->gravity = Vector3d(0., 0., -9.81);
-
-    printf("\n RBDL load Complete \n");
-    
-    //* setting for getting dt
-    this->update_connection_ = event::Events::ConnectWorldUpdateBegin(boost::bind(&RB1_500E::UpdateAlgorithm, this));
-
 }
 ```
-<!-- * 코드 내에 `Addons::URDFReadFromFile()` 함수 안에 `RB1_500e_MODEL_DIR`가 URDF의 경로를 나타내도록 define해놓았습니다. 이것의 선언부에 들어가시면 다음과 같이 urdf의 위치가 셋팅되어있습니다. 이것을 본인 환경에 맞게 수정하시면 됩니다. -->
+<!-- -->
 ``` js
-// #define RB1_500e_MODEL_DIR "/home/js/catkin_ws/src/RobotControl2023/urdf/RB1_500e.urdf"
+
 ```
 
 **모든 준비 과정이 끝나면, `catkin_make`을 입력하여 컴파일을 진행합니다.**
@@ -336,7 +310,7 @@ void gazebo::RB1_500E::Load(physics::ModelPtr _model, sdf::ElementPtr /*_sdf*/)
 cd ~/catkin_ws && catkin_make
 ```
 
-**위의 catkin_make 방식은 번거롭기 때문에 bashrc 파일에 단축키 설정을 하여 간편하게 빌드합니다.**
+**위의 catkin_make 방식은 번거롭기 때문에 bashrc 파일에 단축키 설정을 하여 간편하게 빌드합니다. 단, 이 작업(aliasing)은 필수 사항이 아닙니다.**
 
 1. 새로운 terminal 창에서 다음과 같은 명령을 합니다.
 
@@ -350,7 +324,7 @@ alias cm='cd ~/catkin_ws && catkin_make'
 ```
 
 아래 코드는 예시 코드이며, 사용자들마다 적절한 위치에 넣어주시면 됩니다.
-예시 코드에서는 bashrc의 처음 부분에 단축키 설정을 하였습니다.
+예시 코드에서는 bashrc의 최하단 부분에 단축키 설정을 하였습니다.
 
 **In `bashrc`**
 ```js
@@ -358,30 +332,6 @@ alias cm='cd ~/catkin_ws && catkin_make'
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
-
-alias eb='gedit ~/.bashrc'
-alias sb='source ~/.bashrc'
-alias cc='cd ~/catkin_ws && catkin_make clean'
-alias cw='cd ~/catkin_ws'
-alias cs='cd ~/catkin_ws/src'
-alias cm='cd ~/catkin_ws && catkin_make'
-alias ljscm='cd ~/ljs/catkin_ws && catkin_make'
-alias cds='source ~/catkin_ws/devel/setup.bash'
-alias vip='cd ~/catkin_ws/src/gui'
-alias sim='cd ~/Downloads && ./omniverse-launcher-linux.AppImage'
-alias matlab='cd /usr/local/MATLAB/R2023a/bin && ./matlab'
-alias PYTHON_PATH=~/.local/share/ov/pkg/isaac_sim-2022.2.1/python.sh
-# source /opt/ros/noetic/setup.bash
-# source ~/catkin_ws/devel/setup.bash
-
-#own
-export ISAAC_SIM="$HOME/.local/share/ov/pkg/isaac_sim-2022.2.1"
-
-export ROS_MASTER_URI=http://localhost:11311
-export ROS_HOSTNAME=localhost
-
-# local address
-PATH=$PATH:/usr/local/bin/
 
 # If not running interactively, don't do anything
 case $- in
@@ -496,8 +446,36 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-source /opt/ros/noetic/setup.bash
-source ~/catkin_ws/devel/setup.bash
+
+
+source /opt/ros/noetic/setup.bash  
+source ~/catkin_ws/devel/setup.bash 
+
+export PATH=/opt/openrobots/bin:$PATH
+export PKG_CONFIG_PATH=/opt/openrobots/lib/pkgconfig:$PKG_CONFIG_PATH
+#export LD_LIBRARY_PATH=/opt/openrobots/lib:$LD_LIBRARY_PATH
+#export PYTHONPATH=/opt/openrobots/lib/python2.7/site-packages:$PYTHONPATH # Adapt your desired python version here
+export CMAKE_PREFIX_PATH=/opt/openrobots:$CMAKE_PREFIX_PATH
+
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/wonsukji/raisim_build/lib
+#export PYTHONPATH=$PYTHONPATH:/home/wonsukji/raisim_build/lib
+
+
+#export WORKSPACE=/home/wonsukji/workspace
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$WORKSPACE/raisimLib-master/raisim/linux/lib
+#export PYTHONPATH=$PYTHONPATH:$WORKSAPCE/raisim/linux/lib
+export WORKSPACE=/home/wonsukji/raisim_ws
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$WORKSPACE/raisimLib/raisim/linux/lib
+export PYTHONPATH=$PYTHONPATH:$WORKSAPCE/raisimLib/linux/lib
+
+
+alias raisim_make='cd $WORKSPACE/kitech_simulation_shared/build && cmake .. -DCMAKE_PREFIX_PATH=$WORKSPACE/raisimLib/raisim/linux && make -j4'
+alias raisim_kitech_run='cd $WORKSPACE/kitech_simulation_shared/build && ./kitech $WORKSPACE/kitech_simulation_shared/config/cfg.yaml'
+alias raisim_unity='cd /home/wonsukji/raisim_ws/raisimLib/raisimUnity/linux && ./raisimUnity.x86_64'
+
+alias matlab='cd /usr/local/MATLAB/R2022a/bin && ./matlab'
+
+alias cm='cd ~/catkin_ws && catkin_make'
 
 ```
 
