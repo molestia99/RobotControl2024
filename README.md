@@ -211,7 +211,7 @@ RBDL의 재설치를 권장합니다. 사용자마다 `root` 계정 혹은 `user
      > ./b2 install
 
 3. RBDL Library 를 다운로드 및 설치합니다.
-     > git clone --recursive https://github.com/ORB-HD/rbdl-orb/RBDL
+     > git clone --recursive https://github.com/ORB-HD/rbdl-orb
      > cd ~/RBDL && mkdir build
      > cd build && cmake -DRBDL_BUILD_ADDON_URDFREADER=ON CMAKE_BUILD_TYPE=Release ../
      > sudo make && sudo make install
