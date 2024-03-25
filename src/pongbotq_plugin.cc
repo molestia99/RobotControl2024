@@ -341,7 +341,8 @@ void gazebo::PongBot_plugin::UpdateAlgorithm() {
     JointController();
     // con_count++;
 
-    OSQPFloat P_x[3] = {1., 2., 3.};
+    // float P_x[3] = {1., 2., 3.};
+    // OSQPSolver 
 }
 
 void gazebo::PongBot_plugin::GetLinks() {
