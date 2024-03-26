@@ -207,13 +207,18 @@ RBDL의 재설치를 권장합니다. 사용자마다 `root` 계정 혹은 `user
 
 2. 압축을 푼 뒤, 설치를 진행합니다.
      > tar -xvf <file name> (at the directory of zip installation.)
+     
      > cd <folder name> && ./bootstrap.sh
+     
      > ./b2 install
 
 3. RBDL Library 를 다운로드 및 설치합니다.
      > git clone --recursive https://github.com/ORB-HD/rbdl-orb
+     
      > cd ~/RBDL && mkdir build
+     
      > cd build && cmake -DRBDL_BUILD_ADDON_URDFREADER=ON CMAKE_BUILD_TYPE=Release ../
+     
      > sudo make && sudo make install
 
 **OSQP Install**
