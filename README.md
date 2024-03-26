@@ -235,13 +235,17 @@ https://www.youtube.com/watch?v=SICrCNQ-ehQ&list=PLyQSXjkp0qDbw26ghtIcgW9ok58LAt
 
 2. 압축을 푼 뒤, 설치를 진행합니다.
 	> tar -xvzf cmake-3.29.0.tar.gz
+	
 	> cd cmake-3.29.0/
 	> ./bootstrap
+	
 	> make
+	
 	> sudo make install
 
 3. 재부팅한 후, CMake 버전을 확인합니다
 	> cmake --version
+	
 	> (설치 메뉴얼을 따랐을 경우, 터미널에서 cmake version 3.29.0 출력)
 
 
