@@ -206,9 +206,9 @@ RBDL의 재설치를 권장합니다. 사용자마다 `root` 계정 혹은 `user
      >  https://www.boost.org/users/history/version_1_81_0.html
 
 2. 압축을 푼 뒤, 설치를 진행합니다.
-     > tar -xvf <file name> (at the directory of zip installation.)
+     > tar -xvf boost_1_81_0.tar.gz
      
-     > cd <folder name> && ./bootstrap.sh
+     > cd boost_1_81_0/ && ./bootstrap.sh
      
      > ./b2 install
 
@@ -237,6 +237,7 @@ https://www.youtube.com/watch?v=SICrCNQ-ehQ&list=PLyQSXjkp0qDbw26ghtIcgW9ok58LAt
 	> tar -xvzf cmake-3.29.0.tar.gz
 	
 	> cd cmake-3.29.0/
+	
 	> ./bootstrap
 	
 	> make
