@@ -221,6 +221,25 @@ OSQP 라이브러리는 Quadratic Programming 문제를 풀어주는 Solver 입�
 연구실에서 제작한 OSQP Install guide 를 참조합니다.
 https://www.youtube.com/watch?v=SICrCNQ-ehQ&list=PLyQSXjkp0qDbw26ghtIcgW9ok58LAtUEp&index=3
 
+주1) OSQP 설치 과정에서, 사이트의 Note 에서 보시다시피 sudo 권한이 필요할 수 있습니다. 안 될 경우, sudo 를 사용하여 설치하세요.
+"This step requires write permissions in the destination folders. You might be able to gain access using the sudo command."
+주2) 만약, OSQP 설치 과정 중 CMake 상위 버전이 필요할 경우는 아래를 참조합니다.
+
+**CMake Install**
+1. https://cmake.org/download/ 사이트에 접속하여, cmake-3.29.0.tar.gz 파일을 다운받습니다. (24.03.26 기준 최신 버전)
+
+2. 압축을 푼 뒤, 설치를 진행합니다.
+	> tar -xvzf cmake-3.29.0.tar.gz
+	> cd cmake-3.29.0/
+	> ./bootstrap
+	> make
+	> sudo make install
+
+3. 재부팅한 후, CMake 버전을 확인합니다
+	> cmake --version
+	> (설치 메뉴얼을 따랐을 경우, 터미널에서 cmake version 3.29.0 출력)
+
+
 ----
 
 ### 3.How to run RobotControl2024 package
