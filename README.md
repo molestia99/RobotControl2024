@@ -539,11 +539,11 @@ MatrixXd jointToRotMat(VectorXd q)
 VectorXd rotToEuler(MatrixXd rotMat)	// EulerZYX
 ~~~
 
-## 2. 실습 2 : RB1_500e의 Forward Kinematics  
+## 2. 실습 2 : PongBot-Q의 Forward Kinematics  
 
 * Homogeneous Transformation Matrix 만들기
 ~~~c
-MatrixXd getTransformI0()
+MatrixXd getTransformB0()
 MatrixXd jointToTransform01(VectorXd q)
 MatrixXd jointToTransform12(VectorXd q)
 MatrixXd jointToTransform23(VectorXd q)
