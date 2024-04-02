@@ -539,11 +539,11 @@ MatrixXd jointToRotMat(VectorXd q)
 VectorXd rotToEuler(MatrixXd rotMat)	// EulerZYX
 ~~~
 
-## 2. 실습 2 : RB1_500e의 Forward Kinematics  
+## 2. 실습 2 : PongBot-Q의 Forward Kinematics  
 
 * Homogeneous Transformation Matrix 만들기
 ~~~c
-MatrixXd getTransformI0()
+MatrixXd getTransformB0()
 MatrixXd jointToTransform01(VectorXd q)
 MatrixXd jointToTransform12(VectorXd q)
 MatrixXd jointToTransform23(VectorXd q)
@@ -564,6 +564,15 @@ VectorXd rotToEuler(MatrixXd rotMat)
 ### 제출자료
 1. source 코드
 2. 출력된 결과물 capture 파일
+
+### 좌표계 참고사항
+<img width="600" src="./NetBeans 16 Setting Guide/pongbot/pongbot_q_coordinate.png" alt="pongbot_coordinate"> 
+빨간색 좌표계 -> 주황색 좌표계: 좌표계의 회전은 없으며 [0.32, -0.113, 0.0] 병진 이동
+주황색 좌표계 -> 노란색 좌표계: 힙 롤 회전관계이며 병진 이동은 없음
+노란색 좌표계 -> 초록색 좌표계: [0.0, -0.105, 0.0] 병진 이동
+초록색 좌표계 -> 파란색 좌표계: 힙 피치 회전관계이며 [0.0, 0.0, -0.305] 병진 이동
+파란색 좌표계 -> 보라색 좌표계: 니 피치 회전관계이며 [0.0, 0.0, -0.288] 병진 이동
+
 
 
 ## 3. 실습 3 : RB1_500e의 Geometric Jacobian
