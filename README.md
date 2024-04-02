@@ -543,7 +543,7 @@ VectorXd rotToEuler(MatrixXd rotMat)	// EulerZYX
 
 * Homogeneous Transformation Matrix 만들기
 ~~~c
-MatrixXd getTransformB0()
+MatrixXd getTransformB0() : 빨 -> 주
 MatrixXd jointToTransform01(VectorXd q)
 MatrixXd jointToTransform12(VectorXd q)
 MatrixXd jointToTransform23(VectorXd q)
@@ -566,7 +566,7 @@ VectorXd rotToEuler(MatrixXd rotMat)
 2. 출력된 결과물 capture 파일
 
 ### 좌표계 참고사항
-<img width="600" src="./NetBeans 16 Setting Guide/pongbot/pongbot_q_coordinate.png" alt="pongbot_coordinate"> 
+<img width="400" src="./NetBeans 16 Setting Guide/pongbot/pongbot_q_coordinate.png" alt="pongbot_coordinate"> 
 
 * 좌표계 간 거리 정보
 ~~~c
