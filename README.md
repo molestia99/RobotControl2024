@@ -575,9 +575,9 @@ VectorXd rotToEuler(MatrixXd rotMat)
 ~~~
 
 
-## 3. 실습 3 : PongBot-Q의 Geometric Jacobian
+## 3. 실습 3 : Fixed-base에 대한 PongBot-Q의 Geometric Jacobian
 
-* Base가 fixed 되었을때, jointToPosJac 함수 만들기
+* jointToPosJac 함수 만들기
 ~~~c
 MatrixXd jointToPosJac(VectorXd q)
 {
