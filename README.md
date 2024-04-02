@@ -677,7 +677,7 @@ MatrixXd jointToRotJac(VectorXd q)
 2. 출력된 결과물 capture 파일
 
 
-## 실습 4 : RB1_500e의 Pseudo-Inverse 함수와 rotMatToRotVec 함수 만들기
+## 실습 4 : Pseudo-Inverse 함수와 rotMatToRotVec 함수 만들기
 * Matrix Pesudo-Inversion
 The Moore-Pensore pseudo-inverse is a generalization of the matrix inversion operation for non-square matrices. Let a non-square matrix A be defined in R^{mxn}.
 
@@ -724,12 +724,12 @@ VectorXd rotMatToRotVec(MatrixXd C)
 ~~~    
 
 ### 과제
-* q=[10;20;30;40;50;60] 일때, Jacobian의 pseudoInverse 구하기
+* q=[10;20;30] 일때, Jacobian의 pseudoInverse 구하기
 ~~~c
 pinvJ = pseudoInverseMat(J);
 ~~~    
 
-* q_des=[10;20;30;40;50;60], q_init=0.5q_des 일때, C_err(dph)=C_des*C_init.transpose() 구하기
+* q_des=[10;20;30], q_init=0.5q_des 일때, C_err(dph)=C_des*C_init.transpose() 구하기
 * rotMatToRotVec 함수로 dph구하기
 ~~~c
 dph = rotMatToRotVec(C_err);
@@ -741,17 +741,17 @@ dph = rotMatToRotVec(C_err);
 
 
 
-## 5. 실습 5 : RB1_500e의 Numerical Inverse Kinematics
+## 5. 실습 5 : PongBot-Q의 Numerical Inverse Kinematics
 
 * inverseKinematics 함수 만들기
 ~~~c
-VectorXd inverseKinematics(Vector3d r_des, MatrixXd C_des, VectorXd q0, double tol)
+VectorXd inverseKinematics(Vector3d r_des, MatrixXd C_des, VectorXd q0, double tol) // C_des는 여기에서는 사용 안함.
 {
     // Input: desired end-effector position, desired end-effector orientation, initial guess for joint angles, threshold for the stopping-criterion
     // Output: joint angles which match desired end-effector position and orientation
     double num_it;
-    MatrixXd J_P(6,6), J_R(6,6), J(6,6), pinvJ(6,6), C_err(3,3), C_IE(3,3);
-    VectorXd q(6),dq(6),dXe(6);
+    MatrixXd J_P(3,3), J_R(3,3), J(6,3), pinvJ(3,6), C_err(3,3), C_IE(3,3);
+    VectorXd q(3),dq(3),dXe(3);
     Vector3d dr(3), dph(3);
     double lambda;
     
@@ -783,8 +783,8 @@ VectorXd inverseKinematics(Vector3d r_des, MatrixXd C_des, VectorXd q0, double t
         J_P = ...;
         J_R = ...;
 
-        J.block(0,0,3,6) = J_P;
-        J.block(3,0,3,6) = J_R; // Geometric Jacobian
+        J.block(0,0,3,3) = J_P;
+        J.block(3,0,3,3) = J_R; // Geometric Jacobian
         
         // Convert to Geometric Jacobian to Analytic Jacobian
         dq = pseudoInverseMat(J,lambda)*dXe;
@@ -809,16 +809,16 @@ VectorXd inverseKinematics(Vector3d r_des, MatrixXd C_des, VectorXd q0, double t
 ~~~
 
 ### 과제 1
-* q=[10;20;30;40;50;60] 일때, 이 관절각도에 해당하는 end-effoctor의 값을 r_des와 C_des로 설정하고,
-* r_des와 C_des에 대한 joint angle 구하기
+* q=[10;20;30] 일때, 이 관절각도에 해당하는 end-effoctor의 값을 r_des로 설정하고,
+* r_des에 대한 joint angle 구하기
 
 ~~~c
 void Practice()
 {
         ...
-        // q = [10;20;30;40;50;60]*pi/180;
+        // q = [10;20;30]*pi/180;
         r_des = jointToPostion(q);
-        C_des = jointToRotMat(q);
+        
         
         q_cal = inverseKinematics(r_des, C_des, q*0.5, 0.001);
 }
@@ -828,13 +828,10 @@ void Practice()
 1. source 코드
 2. 출력된 결과물 capture 파일
 
-### 과제 2 (수정필요)
-* Desired Pos = [0.28;0;0.1] & Desired Orientation = Base에 대해 y방향으로 180도 회전 ([-1 0 0;0 1 0;0 0 -1])
-* Result = [?;?;?;?;?;?]
 
 
 
-## 6. 실습 6 : RB1_500e의 Motion Control
+## 6. 실습 6 : PongBot-Q의 Motion Control
 
 * 1-cos 함수로 trajectory 생성하기
 
