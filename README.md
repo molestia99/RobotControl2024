@@ -544,13 +544,10 @@ VectorXd rotToEuler(MatrixXd rotMat)	// EulerZYX
 * Homogeneous Transformation Matrix 만들기
 ~~~c
 MatrixXd getTransformB0() : 빨 -> 주
-MatrixXd jointToTransform01(VectorXd q)
-MatrixXd jointToTransform12(VectorXd q)
-MatrixXd jointToTransform23(VectorXd q)
-MatrixXd jointToTransform34(VectorXd q)
-MatrixXd jointToTransform45(VectorXd q)
-MatrixXd jointToTransform56(VectorXd q)
-MatrixXd getTransform6E()
+MatrixXd jointToTransform01(VectorXd q) : 주 -> 노
+MatrixXd jointToTransform12(VectorXd q) : 노 -> 초
+MatrixXd jointToTransform23(VectorXd q) : 초 -> 파
+MatrixXd getTransform3E() : 파 -> 보
 ~~~
 * Forward Kinematics 만들기
 ~~~c
@@ -558,7 +555,7 @@ VectorXd jointToPosition(VectorXd q)
 MatrixXd jointToRotMat(VectorXd q)
 VectorXd rotToEuler(MatrixXd rotMat)
 ~~~
-* q=[10;20;30;40;50;60] 일때, End-effector의 position과 Rotation Matrix 구하기
+* q=[10;20;30] 일때, End-effector의 position과 Rotation Matrix 구하기
 * 이때, Euler Angle 구하기
 
 ### 제출자료
@@ -578,85 +575,63 @@ VectorXd rotToEuler(MatrixXd rotMat)
 ~~~
 
 
-## 3. 실습 3 : RB1_500e의 Geometric Jacobian
+## 3. 실습 3 : PongBot-Q의 Geometric Jacobian
 
-* jointToPosJac 함수 만들기
+* Base가 fixed 되었을때, jointToPosJac 함수 만들기
 ~~~c
 MatrixXd jointToPosJac(VectorXd q)
 {
     // Input: vector of generalized coordinates (joint angles)
     // Output: J_P, Jacobian of the end-effector translation which maps joint velocities to end-effector linear velocities in I frame.
-    MatrixXd J_P = MatrixXd::Zero(3,6);
-    MatrixXd T_I0(4,4), T_01(4,4), T_12(4,4), T_23(4,4), T_34(4,4), T_45(4,4), T_56(4,4), T_6E(4,4);
-    MatrixXd T_I1(4,4), T_I2(4,4), T_I3(4,4), T_I4(4,4), T_I5(4,4), T_I6(4,4);
-    MatrixXd R_I1(3,3), R_I2(3,3), R_I3(3,3), R_I4(3,3), R_I5(3,3), R_I6(3,3);
-    Vector3d r_I_I1(3), r_I_I2(3), r_I_I3(3), r_I_I4(3), r_I_I5(3), r_I_I6(3);
-    Vector3d n_1(3), n_2(3), n_3(3), n_4(3), n_5(3), n_6(3);
-    Vector3d n_I_1(3),n_I_2(3),n_I_3(3),n_I_4(3),n_I_5(3),n_I_6(3);
-    Vector3d r_I_IE(3);
-
+    MatrixXd J_P = MatrixXd::Zero(3,3);
+    MatrixXd T_B0(4,4), T_01(4,4), T_12(4,4), T_23(4,4), T_3E(4,4);
+    MatrixXd T_B1(4,4), T_B2(4,4), T_B3(4,4);
+    MatrixXd R_B1(3,3), R_B2(3,3), R_B3(3,3);
+    Vector3d r_B_B1(3), r_B_B2(3), r_B_B3(3);
+    Vector3d n_1(3), n_2(3), n_3(3);
+    Vector3d n_B_1(3),n_B_2(3),n_B_3(3);
+    Vector3d r_B_BE(3);
 
     //* Compute the relative homogeneous transformation matrices.
-    T_I0 = 
+    T_B0 = 
     T_01 = 
     T_12 = 
     T_23 = 
-    T_34 =
-    T_45 = 
-    T_56 = 
-    T_6E = 
+    T_3E =
 
-    //* Compute the homogeneous transformation matrices from frame k to the inertial frame I.
-    T_I1 = 
-    T_I2 = 
-    T_I3 = 
-    T_I4 = 
-    T_I5 =
-    T_I6 = 
+    //* Compute the homogeneous transformation matrices from frame k to the base frame B.
+    T_B1 = 
+    T_B2 = 
+    T_B3 = 
 
     //* Extract the rotation matrices from each homogeneous transformation matrix. Use sub-matrix of EIGEN. https://eigen.tuxfamily.org/dox/group__QuickRefPage.html
-    R_I1 = T_I1.block(0,0,3,3);
-    R_I2 = 
-    R_I3 = 
-    R_I4 = 
-    R_I5 = 
-    R_I6 = 
+    R_B1 = T_B1.block(0,0,3,3);
+    R_B2 = 
+    R_B3 = 
 
     //* Extract the position vectors from each homogeneous transformation matrix. Use sub-matrix of EIGEN.
-    r_I_I1 = 
-    r_I_I2 = 
-    r_I_I3 = 
-    r_I_I4 = 
-    r_I_I5 = 
-    r_I_I6 = 
+    r_B_B1 = 
+    r_B_B2 = 
+    r_B_B3 = 
 
     //* Define the unit vectors around which each link rotate in the precedent coordinate frame.
-    n_1 << 0,0,1;
+    n_1 << 1,0,0;
     n_2 << 
     n_3 << 
-    n_4 << 
-    n_5 << 
-    n_6 << 
 
-    //* Compute the unit vectors for the inertial frame I.
-    n_I_1 = R_I1*n_1;
-    n_I_2 = 
-    n_I_3 = 
-    n_I_4 = 
-    n_I_5 = 
-    n_I_6 = 
+    //* Compute the unit vectors for the base frame B.
+    n_B_1 = R_B1*n_1;
+    n_B_2 = 
+    n_B_3 = 
 
     //* Compute the end-effector position vector.
-    r_I_IE = 
+    r_B_BE = 
 
 
     //* Compute the translational Jacobian. Use cross of EIGEN.
-    J_P.col(0) << n_I_1.cross(r_I_IE-r_I_I1);
+    J_P.col(0) << n_B_1.cross(r_B_BE-r_B_B1);
     J_P.col(1) << 
     J_P.col(2) << 
-    J_P.col(3) << 
-    J_P.col(4) << 
-    J_P.col(5) << 
 
     //std::cout << "Test, JP:" << std::endl << J_P << std::endl;
 
@@ -668,17 +643,17 @@ MatrixXd jointToPosJac(VectorXd q)
 MatrixXd jointToRotJac(VectorXd q)
 {
    // Input: vector of generalized coordinates (joint angles)
-    // Output: J_R, Jacobian of the end-effector orientation which maps joint velocities to end-effector angular velocities in I frame.
-    MatrixXd J_R(3,6);
-    MatrixXd T_I0(4,4), T_01(4,4), T_12(4,4), T_23(4,4), T_34(4,4), T_45(4,4), T_56(4,4), T_6E(4,4);
-    MatrixXd T_I1(4,4), T_I2(4,4), T_I3(4,4), T_I4(4,4), T_I5(4,4), T_I6(4,4);
-    MatrixXd R_I1(3,3), R_I2(3,3), R_I3(3,3), R_I4(3,3), R_I5(3,3), R_I6(3,3);
-    Vector3d n_1(3), n_2(3), n_3(3), n_4(3), n_5(3), n_6(3);
+    // Output: J_R, Jacobian of the end-effector orientation which maps joint velocities to end-effector angular velocities in B frame.
+    MatrixXd J_R(3,3);
+    MatrixXd T_B0(4,4), T_01(4,4), T_12(4,4), T_23(4,4), T_3E(4,4);
+    MatrixXd T_B1(4,4), T_B2(4,4), T_B3(4,4);
+    MatrixXd R_B1(3,3), R_B2(3,3), R_B3(3,3);
+    Vector3d n_1(3), n_2(3), n_3(3);
 
     //* Compute the relative homogeneous transformation matrices.
 
 
-    //* Compute the homogeneous transformation matrices from frame k to the inertial frame I.
+    //* Compute the homogeneous transformation matrices from frame k to the base frame B.
 
 
     //* Extract the rotation matrices from each homogeneous transformation matrix.
@@ -695,7 +670,7 @@ MatrixXd jointToRotJac(VectorXd q)
     return J_R;
 }
 ~~~
-* q=[10;20;30;40;50;60] 일때, Geometric Jacobian 구하기
+* q=[10;20;30] 일때, Geometric Jacobian 구하기
 
 ### 제출자료
 1. source 코드
