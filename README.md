@@ -848,7 +848,7 @@ double func_1_cos(double t, double, init, double final, double T)
 
 
 ### 과제
-0. 5초동안, 초기자세에서 WalkReady 자세로 움직이기 in Joint Coordinates
+0. 5초동안, 초기자세에서 [HR;HP;KN] = [0;20;-40]로 WalkReady 자세 취하기(in Joint Coordinates)
 1. 5초동안, z방향으로 0.1m 이동하기 in Cartesian Coordinates (0번 실행뒤, 1번 실행)
 
 
