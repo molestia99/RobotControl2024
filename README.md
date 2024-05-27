@@ -851,6 +851,7 @@ double func_1_cos(double t, double, init, double final, double T)
 0. 5초동안, 초기자세에서 [HR;HP;KN] = [0;20;-40]로 WalkReady 자세 취하기(in Joint Coordinates)
 1. 5초동안, z방향으로 0.1m 이동하기 in Cartesian Coordinates (0번 실행뒤, 1번 실행)
 2. 4다리 모두 적용하기
+3. 관절 목표각도와 실제각도 사이의 에러값 확인하기 (그래프)
 
 
 ## 7. 실습 7 : PongBot-Q의 Gravity Compensation
