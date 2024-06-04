@@ -239,46 +239,48 @@ JH
 2. 기존 위치에 압축 해제(~/catkin_ws/src/RobotControl2024/src/) 
 
 3. osqp 폴더 내의 build 폴더 삭제 후 build 폴더 재생성
-	```
-	cd ~/catkin_ws/src/RobotControl2024/src/osqp/
-	```
- 	```    
-    	mkdir build
-  	```
+```
+cd ~/catkin_ws/src/RobotControl2024/src/osqp/
+```
+```    
+mkdir build
+```
 
 4. osqp 재 빌드  --> https://osqp.org/docs/get_started/sources.html
 
 빌드 폴더로 들어가서,
-
-    > cd build/
- 
+```
+cd build/
+``` 
 make file 생성(Linux)
-   
-    > cmake -G "Unix Makefiles" ..
-
+```
+cmake -G "Unix Makefiles" ..
+```
 osqp 컴파일
-   
-    > cmake --build .
-
+```   
+cmake --build .
+```
 바이너리 설치
-   
-    > sudo cmake --build . --target install
+```
+sudo cmake --build . --target install
+```
 
 5. CMakelist 수정
 ```
 find_package (osqp REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE osqp::osqp)
 ```
+
 6. plugin.cc 수정
 
 include osqp.h  
-	
-    > #include "osqp.h"
-
+```
+#include "osqp.h"
+```
 호환되지 않는 함수 삭제
-	
-    > OSQPFloat P_x[3] = {1., 2., 3.};
-
+```	
+OSQPFloat P_x[3] = {1., 2., 3.};
+```
 
 **CMake Install**
 1. https://cmake.org/download/ 사이트에 접속하여, cmake-3.29.0.tar.gz 파일을 다운받습니다. (24.03.26 기준 최신 버전)
