@@ -244,9 +244,9 @@ cd build/
 3. build 파일로 들어가서 make 파일 생성 및 바이너리 빌드  --> https://osqp.org/docs/get_started/sources.html
 ```
 cmake --build .
-cmake --build . --target install
+sudo cmake --build . --target install
 ```
-     
+    
 **CMake Install**
 1. https://cmake.org/download/ 사이트에 접속하여, cmake-3.29.0.tar.gz 파일을 다운받습니다. (24.03.26 기준 최신 버전)
 
