@@ -249,15 +249,15 @@ mkdir build
 
 4. osqp 재 빌드  --> https://osqp.org/docs/get_started/sources.html
 
-빌드 폴더로 들어가서,
+	빌드 폴더로 들어가서,
 ```
 cd build/
 ``` 
-make file 생성(Linux)
+	make file 생성(Linux)
 ```
 cmake -G "Unix Makefiles" ..
 ```
-osqp 컴파일
+	osqp 컴파일
 ```   
 cmake --build .
 ```
