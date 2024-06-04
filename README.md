@@ -222,6 +222,7 @@ RBDL의 재설치를 권장합니다. 사용자마다 `root` 계정 혹은 `user
      > sudo make && sudo make install
 
 **OSQP Install**
+
 OSQP 라이브러리는 Quadratic Programming 문제를 풀어주는 Solver 입니다.
 연구실에서 제작한 OSQP Install guide 를 참조합니다.
 https://www.youtube.com/watch?v=SICrCNQ-ehQ&list=PLyQSXjkp0qDbw26ghtIcgW9ok58LAtUEp&index=3
