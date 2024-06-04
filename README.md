@@ -231,6 +231,7 @@ https://www.youtube.com/watch?v=SICrCNQ-ehQ&list=PLyQSXjkp0qDbw26ghtIcgW9ok58LAt
 주2) 만약, OSQP 설치 과정 중 CMake 상위 버전이 필요할 경우는 아래를 참조합니다.
 
 **OSQP Previous version Install**
+
 JH
 
 1. 기존 패키지에 있던 OSQP 삭제 후 이전 버전의 OSQP 파일(osqp_old_version.zip) 다운로드
@@ -260,12 +261,13 @@ cmake --build .
 ```
 sudo cmake --build . --target install
 ```
-5. CMakelist 에서 osqp 관련 주석 해제
+5. CMakelist 수정
 ```
 find_package (osqp REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE osqp::osqp)
 ```
 6. plugin.cc 수정
+
 include osqp.h  
 ```
 #include "osqp.h"
