@@ -239,10 +239,12 @@ JH
 2. 기존 위치에 압축 해제(~/catkin_ws/src/RobotControl2024/src/) 
 
 3. osqp 폴더 내의 build 폴더 삭제 후 build 폴더 재생성
-
-    > cd ~/catkin_ws/src/RobotControl2024/src/osqp/
-    
-    > mkdir build
+	```
+	cd ~/catkin_ws/src/RobotControl2024/src/osqp/
+	```
+ 	```    
+    	mkdir build
+  	```
 
 4. osqp 재 빌드  --> https://osqp.org/docs/get_started/sources.html
 
