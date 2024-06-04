@@ -230,6 +230,23 @@ https://www.youtube.com/watch?v=SICrCNQ-ehQ&list=PLyQSXjkp0qDbw26ghtIcgW9ok58LAt
 "This step requires write permissions in the destination folders. You might be able to gain access using the sudo command."
 주2) 만약, OSQP 설치 과정 중 CMake 상위 버전이 필요할 경우는 아래를 참조합니다.
 
+**OSQP Previous version Install**
+JH
+
+1. 기존 패키지에 있던 OSQP 삭제 후 이전 버전의 OSQP 파일 다운로드 
+
+2. osqp 폴더 내의 build 파일 삭제 및 재생성
+```
+~catkin_ws/src/RobotControl2024/src/osqp/
+mkdir build
+cd build/
+```
+3. build 파일로 들어가서 make 파일 생성 및 바이너리 빌드  --> https://osqp.org/docs/get_started/sources.html
+```
+cmake --build .
+cmake --build . --target install
+```
+     
 **CMake Install**
 1. https://cmake.org/download/ 사이트에 접속하여, cmake-3.29.0.tar.gz 파일을 다운받습니다. (24.03.26 기준 최신 버전)
 
