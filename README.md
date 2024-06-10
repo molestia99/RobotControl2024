@@ -304,7 +304,45 @@ OSQPFloat P_x[3] = {1., 2., 3.};
 
 
 ----
+**qp_practice Class Install**
 
+1. qp_practice 파일 설치
+
+2. include 폴더 내에 qp_practice 폴더 생성
+```
+cd ~/catkin_ws/src/RobotControl2024/include/
+```
+```
+mkdir qp_practice
+```
+3. ~/include/qp_practice 폴더에 qp_practice.h 넣기
+
+4. src 폴더 내에 qp_practice 폴더 생성
+```
+cd ~/catkin_ws/src/RobotControl2024/src/
+```
+```
+mkdir qp_practice
+```
+5. ~/src/qp_practice 폴더에 qp_practice.cpp 넣기
+
+6. Cmakelist 수정
+```
+add_library(${PROJECT_NAME}
+src/qp_practice/qp_practice.cpp
+)
+```
+7. plugin.cc 수정
+   헤더파일 추가
+```
+#include "qp_practice/qp_practice.h"
+```
+   Class 선언
+```
+qp_practice QP;
+```
+
+----
 ### 3.How to run RobotControl2024 package
 #### **!! 시뮬레이션 실행 전에 확인 해야하거나 셋팅 !!**
 
