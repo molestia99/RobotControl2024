@@ -962,6 +962,16 @@ double func_1_cos(double t, double, init, double final, double T)
 2. 이때 task-space impedance control 적용하기
 
 
+## 9. 실습 9 : Balancing control using QP
+
+* Single Rigid Body Dynamics 모델을 이용하고, 자세안정화를 위한 QP form 생성
+* OSQP library를 적용하여 지지발의 Ground Reaction Force 계산
+* Jacobian transpose를 적용하여 관절 torque 계산
+
+### 과제
+0. 5초동안, 초기자세에서 [HR;HP;KN] = [0;20;-40]로 WalkReady 자세 취하기(in Joint Coordinates)
+1. OSQP를 적용하여 walkready 자세 유지하기
+2. 이때 작은 impedance control 제어 적용
 
 <!--
 
